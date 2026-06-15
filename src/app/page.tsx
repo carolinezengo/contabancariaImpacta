@@ -1,0 +1,10 @@
+
+
+export default function Home() {
+  return (
+    <div >
+      <h1>Bem Vindo a Home!!</h1>
+     
+    </div>
+  );
+}
