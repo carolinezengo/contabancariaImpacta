@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "it_bank.Api.Model/1.0.0": {
+        "runtime": {
+          "it_bank.Api.Model.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "it_bank.Api.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
