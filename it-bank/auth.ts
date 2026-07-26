@@ -9,7 +9,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { UserModel } from './src/domain/models';
 import ApiServices from '@/app/api/ApiServices';
 import NextAuth, { DefaultSession } from 'next-auth';
-import type { JWT } from "next-auth/jwt"
+import type { DefaultJWT } from "next-auth/jwt"
 import { UserModel as CustomUserModel } from "@/domain/models";
 
 
@@ -67,10 +67,13 @@ declare module "next-auth" {
 
 
   declare module 'next-auth/jwt' {
-  interface JWT {
-    nome: string;
+  interface JWT extends DefaultJWT {
+    nome:  string;
+    id: string;
   }
 }
+
+
 
 export const{ handlers,auth, signIn,signOut} = NextAuth({
 
@@ -99,8 +102,8 @@ export const{ handlers,auth, signIn,signOut} = NextAuth({
 
                  const passwordsMaatchHash= await bcrypt.hashSync(user.password,10);
                  const passwordsMaatch= await bcrypt.compare(password.toString(), passwordsMaatchHash);
-
-                   if(passwordsMaatch) return  { name: user.nome, email: user.email, password:user.password };
+                  
+                   if(passwordsMaatch) return  {  id: user.id.toString(), id_number: user.id,   name: user.nome, email: user.email, password:user.password};
                    
                    }else{
                   console.log(parsedCredentials.error.format());  
@@ -117,10 +120,12 @@ export const{ handlers,auth, signIn,signOut} = NextAuth({
      async jwt({ token, user}) {
      if (user) {
      token.nome = user.name as string;
-    //  Adicione outros campos necessários
+      token.id = user.id as string;
+         //  Adicione outros campos necessários
       
 
-      console.log("token "+token.nome + token.name);
+      console.log("token "+token.nome + user.name);
+      console.log("token "+token.id + user.id);
 
       
     }
@@ -131,8 +136,9 @@ export const{ handlers,auth, signIn,signOut} = NextAuth({
       // Transfira os dados do token para o objeto da sessão que será acessível no front/back
       if (token) {
         session.user.name = token.nome as string;
-
-        console.log(token.nome + token.name + session.user.name);
+         session.user.id =  token.id as string;
+        console.log("session"+token.nome   + token.name     + session.user.name);
+           console.log("session"+token.id    + token.id       + session.user.id);
        
       }
       return session;

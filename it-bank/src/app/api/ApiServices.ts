@@ -44,8 +44,8 @@ export default class ApiServices {
   }
 
   // PUT Request
-  public async put<T, U>(endpoint: string, data: U): Promise<T> {
-    const response = await fetch(`${this.apiUrl}${endpoint}`, {
+  public async put<T, U>(endpoint: string, data: U, id:number): Promise<T> {
+    const response = await fetch(`${this.apiUrl}${endpoint}/${id}`, {
       method: 'PUT',
       headers:  {
       'Content-Type': 'application/json',

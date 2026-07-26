@@ -12,6 +12,6 @@ namespace it_bank.Api.Model
         public string? Password { get; set; }
        
          public string? Nome { get; set; }
-        public virtual ICollection<Contas>? Contas { get; set; } = new List<Contas>();
+       
     }
 }

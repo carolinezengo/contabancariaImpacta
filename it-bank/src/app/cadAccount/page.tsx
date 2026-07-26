@@ -1,44 +1,44 @@
+"use client"; 
+
 import { Button, LinkButton } from "../ui/componets/button.component";
 import { Input } from "../ui/componets/input.componet";
-import { InsertConta}  from '../api/ContaServices';
+import { ConverterFormData}  from '../lib/converterForData';
 import { FormEvent } from "react";
-import {Contas} from "@/domain/models"
 
-export default function CadAccount(){
+import Session from "../lib/Session"
 
-      async function onSubmit(event:FormEvent<HTMLFormElement>){
-           
+
+ 
+
+export  default  function CadAccount(){
+   async function onSubmit(event:FormEvent<HTMLFormElement>){
+         
             event.preventDefault();  
             const formData= new FormData(event.currentTarget);
               
               console.log(formData.get('nomeConta'));
-                String(formData.get('nomeConta'));
+              String(formData.get('nomeConta'));
 
-            console.log(formData.get('tipoConta'));
+           console.log(formData.get('tipoConta'));
             
-                 String(formData.get('tipoConta'));
-                console.log(formData.get('valor'));
-                String(formData.get('valor'));
-             
-               const conta= Object.fromEntries(formData.entries());
-             
-                const jsonString = JSON.stringify(conta);
-                console.log("jsonString"+ jsonString);
-                 const parse = JSON.parse(jsonString);
-                   console.log("parse"+ parse);
-               await  InsertConta(parse);
-    
-                
+               String(formData.get('tipoConta'));
+             console.log(formData.get('valor'));
+           String(formData.get('valor'));
+             const sessionId =  await Session();
+             console.log("idSession page" + sessionId);
+             if(sessionId != undefined)
+            await ConverterFormData(formData,sessionId);
+   
           }
-    
+         
 
-    return(
+     return(
         <div className="flex flex-col justify-center">
                <h1 className="text-[30px] font-bold text-center leading-10 pt-10 pb-8">Impacta Bank</h1>
                 <div className="flex flex-col text-center m-5 spac-y-5 ">
                <h2 className=" text-xl font-bold justify-center leading-5 pb-2 pt-2">Cadastrar Nova Conta</h2>
 
-             <form onSubmit={onSubmit}  className="flex flex-col justify-center space-y-5">  
+             <form onSubmit={onSubmit} className="flex flex-col justify-center space-y-5">  
  
                  <h3 className="text-[15px] text-left font-bold  leading-5  pt-3">Nome Conta:</h3>
                  <Input type="text" 

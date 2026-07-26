@@ -30,6 +30,10 @@ builder.Services.AddScoped<UsuariosRepository>();
 builder.Services.AddScoped<ContasRepository>();
 builder.Services.AddScoped<UsuariosService>();
 builder.Services.AddScoped<ContasService>();
+builder.Services.AddScoped<DepositoService>();
+builder.Services.AddScoped<TransferirService>();
+builder.Services.AddScoped<DepositoRepository>();
+builder.Services.AddScoped<TransferirRepository>();
 
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using it_bank.Api.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace it_bank.Api.Repository
 {
@@ -13,33 +14,34 @@ namespace it_bank.Api.Repository
         public DbSet<Contas> Contas { get; set; }
         public DbSet<Deposito> Deposito { get; set; }
         public DbSet<Transferir> Tranferir { get; set; }
+       
       
         public ItbankContext(DbContextOptions options): base(options) 
         {
             
         }
 
-         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<Usuarios>(buildAction =>
             {
                 modelBuilder.Entity<Usuarios>(buildAction =>
                 {
-                     buildAction.ToTable("Usuarios");
-                     buildAction.HasAlternateKey(model => model.Id);
+                    buildAction.ToTable("Usuarios");
+                    buildAction.HasAlternateKey(model => model.Id);
 
-                     buildAction.Property(model => model.Id)
-                     .HasColumnName("id")
-                     .ValueGeneratedOnAdd();
+                    buildAction.Property(model => model.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedOnAdd();
 
-                     buildAction.Property(model => model.Nome)
-                     .HasColumnName("nome");
-                     buildAction.Property(model => model.Email)
-                      .HasColumnName("email");
-                     buildAction.Property(model => model.Password)
-                      .HasColumnName("password");
-              
+                    buildAction.Property(model => model.Nome)
+                    .HasColumnName("nome");
+                    buildAction.Property(model => model.Email)
+                     .HasColumnName("email");
+                    buildAction.Property(model => model.Password)
+                     .HasColumnName("password");
+
                 });
             });
 
@@ -63,15 +65,26 @@ namespace it_bank.Api.Repository
                       .HasColumnName("valor");
                       buildAction.Property(model => model.IdUsuario)
                      .HasColumnName("usuarioId");
-                   buildAction.HasOne(detail => detail.Usuario)
-                            .WithMany(master => master.Contas)
-                            .HasForeignKey(model => model.IdUsuario)
-                        .OnDelete(DeleteBehavior.Cascade);
+                     
+                      buildAction.HasMany(c => c.Transferir)
+                        .WithOne(d => d.Conta)
+                        .HasForeignKey(d => d.idConta)
+                        .IsRequired(false);
+             
+
+                      buildAction.HasMany(c => c.Depositos)
+                      .WithOne(d => d.Conta)
+                      .HasForeignKey(d => d.idConta)
+                      .IsRequired(false);
+             
+             
+                  
+
 
                   });
            });
-            
-             
+
+
 
             modelBuilder.Entity<Transferir>(buildAction =>
          {
@@ -94,47 +107,54 @@ namespace it_bank.Api.Repository
                       .HasColumnName("dataTransf");
                       buildAction.Property(model => model.idConta)
                      .HasColumnName("idConta");
-                      
-                      buildAction.HasOne(detail => detail.Conta)
-                            .WithMany(master => master.Transferir)
-                            .HasForeignKey(model => model.idConta)
-                             .OnDelete(DeleteBehavior.Cascade);
+
+                      buildAction.HasOne(d => d.Conta)
+                      .WithMany(c => c.Transferir)
+                          .HasForeignKey(d => d.idConta)
+                          .IsRequired(false);
+
+
+
+
+                    
 
                   });
          });
-            
-               modelBuilder.Entity<Deposito>(buildAction =>
-           {    
-             modelBuilder.Entity<Deposito>(buildAction =>
-                {
-                    buildAction.ToTable("Deposito");
-                    buildAction.HasKey(model => model.Id);
 
-                    buildAction.Property(model => model.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Deposito>(buildAction =>
+        {
+            modelBuilder.Entity<Deposito>(buildAction =>
+                  {
+                      buildAction.ToTable("Deposito");
+                      buildAction.HasKey(model => model.Id);
 
-                    buildAction.Property(model => model.idConta)
-                    .HasColumnName("nomeConta");
-                    buildAction.Property(model => model.Valor)
-                    .HasColumnName("valor");
-                    buildAction.Property(model => model.DataDeposito)
-                      .HasColumnName("dataDeposito");
+                      buildAction.Property(model => model.Id)
+                      .HasColumnName("id")
+                      .ValueGeneratedOnAdd();
 
-                    buildAction.HasOne(detail => detail.Conta)
-                          .WithMany(master => master.Depositos)
-                          .HasForeignKey(model => model.idConta)
-                           .OnDelete(DeleteBehavior.Cascade);
+                      buildAction.Property(model => model.idConta)
+                      .HasColumnName("nomeConta");
+                      buildAction.Property(model => model.Valor)
+                      .HasColumnName("valor");
+                      buildAction.Property(model => model.DataDeposito)
+                        .HasColumnName("dataDeposito");
+                            buildAction.HasOne(d => d.Conta)
+                      .WithMany(c => c.Depositos)
+                          .HasForeignKey(d => d.idConta)
+                          .IsRequired(false);
 
-                });
-            });
+                     
+
+                  });
+        });
 
 
             base.OnModelCreating(modelBuilder);
 
 
         }
-
+        
+         
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
            

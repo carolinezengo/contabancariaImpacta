@@ -36,6 +36,7 @@ namespace it_bank.Api.Repository
             }
             return obj;
         }
+   
         public async virtual Task Delete(long id)
         {
             var curModel = await DbSet.FirstOrDefaultAsync(m => m.Id.Equals(id));

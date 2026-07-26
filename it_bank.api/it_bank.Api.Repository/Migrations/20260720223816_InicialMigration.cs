@@ -5,11 +5,27 @@
 namespace it_bank.Api.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InicialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Contas",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nomeConta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    tipoConta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    valor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    usuarioId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contas", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
@@ -23,28 +39,6 @@ namespace it_bank.Api.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Contas",
-                columns: table => new
-                {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nomeConta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    tipoConta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    valor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    usuarioId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contas", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Contas_Usuarios_usuarioId",
-                        column: x => x.usuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,11 +85,6 @@ namespace it_bank.Api.Repository.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contas_usuarioId",
-                table: "Contas",
-                column: "usuarioId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Deposito_nomeConta",
                 table: "Deposito",
                 column: "nomeConta");
@@ -116,10 +105,10 @@ namespace it_bank.Api.Repository.Migrations
                 name: "Tranferir");
 
             migrationBuilder.DropTable(
-                name: "Contas");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Contas");
         }
     }
 }

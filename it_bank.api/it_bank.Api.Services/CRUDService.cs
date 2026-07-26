@@ -21,6 +21,13 @@ namespace it_bank.Api.Services
             return result;
 
         }
+
+         public async virtual Task<TModel> ReplaceItem(long id, TModel obj)
+        {
+            var result = await Repository.Update(id,obj);
+            return result;
+
+        }
         public async virtual Task Remove(long id)
         {
               await Repository.Delete(id);

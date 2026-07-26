@@ -1,27 +1,32 @@
 
 import {  Contas } from "@/domain/models";
 import Menu from "../ui/componets/menu.components";
-import Link from "next/link";
 
 import ApiServices from "../api/ApiServices";
 import { auth } from "../../../auth";
+import Link from "next/link";
 
- 
+
+  
 
 
-function createRow(contas: Contas){
+function createRow(contas: Contas ){
    
   return(
 
-     <tr key={contas.nomeConta} className="border-b border-solid border-gray-400 h-10">
-      <td>{contas.nomeConta}</td>
-      <td>{contas.tipoConta}</td>
-      <td>{contas.valor}</td>
-      <td><Link href="/statement">..</Link></td>
+     <tr key={contas?.nomeConta} className="border-b border-solid border-gray-400 h-10">
+      <td>{contas?.nomeConta}</td>
+      <td>{contas?.tipoConta}</td>
+      <td>{contas?.valor}</td>
+    <td><Link href={{pathname: "/statement", query:{nomeConta: contas?.nomeConta}} }>
+      ...
+      </Link></td>
     </tr>
     
     )
 }
+
+ 
 
 export default async function Account({
   
@@ -40,15 +45,12 @@ export default async function Account({
 
    //const data = await getData();
   
-  
-
-
    const url = "http://localhost:5000/api/"
    const api = new ApiServices(url);
 
     const data:Contas[] = await api.get('Contas');
+  
     const session = await auth();
-
     const user= session?.user.name;
    
 
@@ -59,7 +61,7 @@ export default async function Account({
             <div className=" text-[10px] m-5  leading-10 text-right text-blue-600">  
               <Link href="/cadAccount"    >
             
-            Nova Conta
+               Nova Conta
             </Link></div>
            
            
@@ -74,10 +76,9 @@ export default async function Account({
     </tr>
   </thead>
   <tbody>
-   {data.map(ac=> createRow(ac))}
+   {data.map(ac=> createRow(ac) )}
     </tbody>
     </table>
-
     </div>  
     <Menu/>
     </div>
