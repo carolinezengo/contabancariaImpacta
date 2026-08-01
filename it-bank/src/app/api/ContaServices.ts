@@ -56,11 +56,29 @@ throw new Error ('Erro na conta cadastrada');
 
         
      }
-    
-     
+  
+}catch(error)
 
-      
-       
+{
+console.error("Erro ocorrido: " +error);
+  
+throw new Error ('Erro na conta cadastrada');
+ 
+}
+
+}
+
+
+export async function getTodasContas(): Promise<Contas []> {
+        
+     try{
+    const url = "http://localhost:5000/api/";
+    const api = new ApiServices(url);
+   
+            const contas: Contas[] =   await api.get('contas');
+  
+            return contas;
+     
   
 }catch(error)
 

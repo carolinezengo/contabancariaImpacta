@@ -4,9 +4,7 @@ import { Button, LinkButton } from "../ui/componets/button.component";
 import { Input } from "../ui/componets/input.componet";
 import { ConverterFormData}  from '../lib/converterForData';
 import { FormEvent } from "react";
-
-import Session from "../lib/Session"
-
+import Session from "../lib/session";
 
  
 

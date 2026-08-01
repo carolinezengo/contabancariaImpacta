@@ -1,4 +1,4 @@
-import { string } from "zod/v4"
+
 
 
 export class UserModel{
@@ -25,32 +25,33 @@ export class AccountInfo{
 
 
 export class Contas{
-     id?: number
+     id : number | null
     nomeConta:string
     tipoConta:string
     idUser: number
     valor:string
-   depositos: Depositos[]
-   transferir:Transferencia[] 
-    constructor(id:number, nomeConta:string,idUser:number, tipoConta:string,valor:string, deposito:Depositos[], transfencia:Transferencia[]){
-       this.id =id
+   depositos: Depositos[] |null
+   transferir:Transferencia[] | null
+    constructor( nomeConta:string,idUser:number, tipoConta:string,valor:string, deposito?:Depositos[], transfencia?:Transferencia[],id?:number|null){
+  
         this.nomeConta= nomeConta
         this.idUser = idUser
         this.tipoConta = tipoConta
         this.valor = valor
-        this.depositos=deposito
-        this.transferir=transfencia
+        this.depositos=deposito ??null
+        this.transferir=transfencia ?? null
+        this.id =id ??null
 
     }
 }
 
-    export class Depositos{
+ export class Depositos{
    
      valor :string
-       dataDeposito :string
-       idConta :number
-       tipo: string 
-       data:string
+    dataDeposito :string
+    idConta :number
+    tipo: string 
+    data:string
   
     constructor( valor:string, dataDeposito:string, idConta:number, deposito:string, data:string){
        
