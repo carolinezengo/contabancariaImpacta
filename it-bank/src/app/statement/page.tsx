@@ -11,17 +11,17 @@ import { auth } from "../../../auth";
 
 async function createRow(contas: Contas){
  
- contas.depositos = contas.depositos.map(item => ({
+ contas.depositos= contas?.depositos?.map(item => ({
   ...item,
   data: item.dataDeposito,
   tipo: "Depósito"
-}));
+}))||[];
 
-contas.transferir = contas?.transferir.map(item => ({
+contas.transferir = contas?.transferir?.map(item => ({
   ...item,
   data: item.dataTransf,
   tipo: "Transferência"
-}));
+}))||[];
 
 const todasTransicoes = [
   ...(contas?.depositos?? []),
@@ -32,8 +32,8 @@ const todasTransicoes = [
      console.log("todas transicoes "+ JSON.stringify(todasTransicoes))
    return(
     <tbody>
-        {todasTransicoes.map((item) => ( 
-     <tr key={item?.idConta} className="border-b border-solid border-gray-400 h-10">
+    {todasTransicoes.map((item,index) => ( 
+     <tr key={index} className="border-b border-solid border-gray-400 h-10">
        <td>{item?.tipo}</td>
       <td>{item?.data}</td>
       <td>{item?.valor}</td>
@@ -68,10 +68,10 @@ export default async function Statement({searchParams}:{
    
         return (
 
- <div className="flex flex-col justify-center"    >
+ <div className="flex flex-col justify-center">
 
-             <h1 className="text1 font-bold text-left leading-10 pt-10 pb-10 ml-5">
-              Bem Vindo, {nomeUserSession}
+             <h1>
+              Bem {nomeUserSession}
                 </h1>
        
         <div className="flex flex-col justify-center m-5 space-y-5">

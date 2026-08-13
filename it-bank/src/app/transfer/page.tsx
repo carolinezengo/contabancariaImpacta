@@ -1,7 +1,24 @@
-import { LinkButton } from "../ui/componets/button.component";
+'use client'
+import { useRef } from "react";
+import { Button, LinkButton } from "../ui/componets/button.component";
 import { Input } from "../ui/componets/input.componet";
+import { useRouter } from 'next/navigation'; 
 
-export default function Deposit(){
+export default function Transfer(){
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  
+   const router = useRouter();
+  const handleEnviar = () => {
+    
+    const valor = inputRef.current?.value|| '';// Pega o valor direto do DOM
+
+  console.log("valor na funcao onclick" + valor)
+
+    router.push(`/transfer-finalize?valor=${encodeURIComponent(valor)}`);
+  };
+
+
 
     return(
         <div className="flex flex-col justify-center">
@@ -10,13 +27,13 @@ export default function Deposit(){
                 <div className="flex flex-col justify-center m-5 space-y-5">
                     <h2 className=" font-bold text-center leading-5 pb-5">Digite o valor desejado para transferencia</h2>
                     <div className="flex flex-col justify-center align-middle text-center center m-2 pb-3 ">
-                    <Input type="number" placeholder="Digite o valor da Transferencia"/>
+                    <Input ref ={inputRef} type="number" placeholder="Digite o valor da Transferencia"/>
                 </div>
                 </div>
                 <div className="flex flex-col justify-center align-bottom text-center m-2 space-y-7">
-                    <LinkButton type="submit" btnType="default" btnSize="default" href="/transfer-finalize" key="transferir" >
+                    <Button   onClick={handleEnviar} type="submit" btnType="default" btnSize="default"  key="transferir" >
                        Tranferir valor 
-                    </LinkButton>
+                    </Button>
                          <LinkButton type="submit" btnType="destructive" btnSize="default" href="/statement" key="cancelarDeposito">
                        Cancelar
                     </LinkButton>

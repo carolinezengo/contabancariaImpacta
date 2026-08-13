@@ -51,12 +51,12 @@ return<Link className={mergeClassName(className,baseCn,btnSize,btnTypeCn)} href=
 
 
  const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((
-   { className,btnType, btnSize, ...props},
-   ref ) => { 
+   { className,btnType, onClick,btnSize, ...props},
+   ref) => { 
       const btnTypeCn= buttonTypes[btnType];
       const btnSizecn= buttonSIze[btnSize];          
 
-    return( <button className={mergeClassName(className,baseCn,btnSizecn,btnTypeCn)} ref={ref} {...props}/>)}); 
+    return( <button className={mergeClassName(className,baseCn,btnSizecn,btnTypeCn)} ref={ref} onClick={onClick} {...props}/>)}); 
     
     Button.displayName="Button";
 

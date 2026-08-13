@@ -12,7 +12,7 @@ import ApiServices from "./ApiServices";
 
     
      
-      console.log("teste responset getuse "+JSON.stringify(response));
+    //  console.log("teste responset getuse "+JSON.stringify(response));
       
          return ''; 
   
@@ -50,7 +50,7 @@ throw new Error ('Erro na conta cadastrada');
            const nomeConta = contaAlterada.find(c => c.nomeConta== contaAtualizada.nomeConta)?.nomeConta;
            
          
-           console.log("teste responset updateuse "+ JSON.stringify(contaAlterada));
+       //    console.log("teste responset updateuse "+ JSON.stringify(contaAlterada));
            if (nomeConta != null )
             return {nome:nomeConta, sucess: true};
 

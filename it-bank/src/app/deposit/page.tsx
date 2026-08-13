@@ -8,6 +8,7 @@ import { Contas } from "@/domain/models";
 import { getTodasContas } from "../api/ContaServices";
 
 import { actionDeposit } from "../lib/action";
+import { auth } from "../../../auth";
 
 
 
@@ -29,9 +30,12 @@ export default async function Deposit(){
 
           
         const todasContas:Contas[] = await getTodasContas();
+         const session = await auth();
+            const user= session?.user.name;
+           
 
      return( <div className="flex flex-col justify-center">
-            <h1 className=" text-x1  font-bold text-left leading-10 pt-10 pb-10 m-5">Bem Vindo, Carol</h1>
+            <h1 className=" text-x1  font-bold text-left leading-10 pt-10 pb-10 m-5">Bem Vindo, {user}</h1>
           
             <div className="flex flex-col justify-center align-middle text-center center m-2 space-y-2">
                 <div className="flex flex-col justify-center m-5 space-y-5">
@@ -39,13 +43,13 @@ export default async function Deposit(){
                <form action={onSubmit} className="flex flex-col justify-center space-y-5">  
     
                  <h3 className="text-xl font-bold justify-center leading-5 pb-2">Escolha a conta</h3>
-                 <select id="tecnologias" name="nomeConta" multiple size={3}>
-        {todasContas.map((item) => (
-          <option key={item.id} >
-            {item.nomeConta}
-          </option>
-        ))}
-      </select>
+                 <select id="tecnologias" name="nomeConta" multiple size={3} className="py-1 px-2 text-sm rounded border border-gray-300 bg-white">
+                {todasContas.map((item) => (
+              <option key={item.id} >
+              {item.nomeConta}
+            </option>
+            ))}
+          </select>
     
                  <h3 className="text-xl font-bold justify-center leading-5 pb-2">Digite o valor do Deposito</h3>
                       <Input type="number"
@@ -53,21 +57,19 @@ export default async function Deposit(){
                   name="valor"
                   autoComplete="current-password"
                 />    
-                         <h3 className="text-xl font-bold justify-center leading-5 pb-2">Digite o valor do Deposito</h3>
+                 <h3 className="text-xl font-bold justify-center leading-5 pb-2">Digite a data</h3>
                       <Input type="text"
                  placeholder="122"
                   name="data"
                   autoComplete="current-password"
                 />     
-                         <h3 className="text-xl font-bold justify-center leading-5 pb-2">Digite o valor do Deposito</h3>
-                      <Input type="text"
+                <h3 className="text-xl font-bold justify-center leading-5 pb-2">Digite tipo transição</h3>
+                 <Input type="text"
                  placeholder="122"
                   name="tipo"
                   autoComplete="current-password"
                 />       
-              
-                
-             
+         
                 <Button  btnSize="default" type="submit" btnType="default"  >
              Depositar
                  </Button>

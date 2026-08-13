@@ -26,15 +26,10 @@ function createRow(contas: Contas ){
     )
 }
 
- 
 
-export default async function Account({
-  
-}:{
-    contas:Contas
 
-}){
-//   async function getData():Promise<Array<AccountInfo>> {
+export default async function Account(){
+  //   async function getData():Promise<Array<AccountInfo>> {
   //  'use server'
     //return[{name:'cc-1',type:"conta corrente", value:"50"},
     //  {name:'cc-2',type:"conta pouoanca", value:"50"}

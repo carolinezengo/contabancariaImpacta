@@ -25,7 +25,7 @@ export class AccountInfo{
 
 
 export class Contas{
-     id : number | null
+    id : number | null
     nomeConta:string
     tipoConta:string
     idUser: number
@@ -66,19 +66,19 @@ export class Contas{
     }}
     export class Transferencia{
    
-    destino : string
+     destino : string
      valor :string
-    dataTransf: string
+     dataTransf: string
      tipo:string
      idConta : number
      data: string
    
-    constructor( destino:string, valor:string, dataTransf: string, idConta:number, transferencia:string, data:string){
+    constructor( destino:string, valor:string, dataTransf: string, idConta:number, tipo:string, data:string){
        
         this.destino= destino
         this.valor = valor
         this.dataTransf = dataTransf
-        this.tipo = transferencia
+        this.tipo = tipo
         this.idConta = idConta
         this.data = data
     }}
